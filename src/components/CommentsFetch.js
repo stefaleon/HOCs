@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import * as actions from "../actions";
+import requireAuth from "./requireAuth";
 
 class CommentFetch extends React.Component {
   state = { comments: [] };
@@ -14,4 +16,4 @@ class CommentFetch extends React.Component {
   }
 }
 
-export default connect(null, actions)(CommentFetch);
+export default connect(null, actions)(requireAuth(CommentFetch));
