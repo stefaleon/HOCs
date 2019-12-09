@@ -1,13 +1,15 @@
 import React from "react";
 import { Route, Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import CommentBox from "./components/CommentBox";
 import CommentList from "./components/CommentList";
 import CommentsFetch from "./components/CommentsFetch";
+import { toggleAuth } from "./actions";
 
 import "./App.css";
 
-const header = () => {
+const header = (buttonClickAction, isSignedIn) => {
   return (
     <ul className="header">
       <li>
@@ -19,19 +21,23 @@ const header = () => {
       <li>
         <Link to="/fetch">Fetch</Link>
       </li>
-      <li>{authButton(true)}</li>
+      <li>{authButton(buttonClickAction, isSignedIn)}</li>
     </ul>
   );
 };
 
-const authButton = isSignedIn => {
-  return <button>{isSignedIn ? "Sign Out" : "Sign In"}</button>;
+const authButton = (clickAction, isSignedIn) => {
+  return (
+    <button onClick={() => clickAction(!isSignedIn)}>
+      {isSignedIn ? "Sign Out" : "Sign In"}
+    </button>
+  );
 };
 
-function App() {
+function App({ toggleAuth, auth }) {
   return (
     <div className="App">
-      {header()}
+      {header(toggleAuth, auth)}
       <Route path="/post" component={CommentBox} />
       <Route path="/fetch" component={CommentsFetch} />
       <Route path="/" exact component={CommentList} />
@@ -39,4 +45,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps, { toggleAuth })(App);
