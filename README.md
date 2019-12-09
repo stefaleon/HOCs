@@ -1,1 +1,1 @@
-## Grider Advanced React-Redux, Testing
+## Grider Advanced React-Redux, HOCs
