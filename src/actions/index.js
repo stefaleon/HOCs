@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SAVE_COMMENT, FETCH_COMMENTS } from "./types";
+import { SAVE_COMMENT, FETCH_COMMENTS, TOGGLE_AUTH } from "./types";
 
 export const saveComment = comment => {
   return {
@@ -18,4 +18,11 @@ export const fetchComments = () => async dispatch => {
     type: FETCH_COMMENTS,
     payload: res.data
   });
+};
+
+export const toggleAuth = isSignedIn => {
+  return {
+    type: TOGGLE_AUTH,
+    payload: isSignedIn
+  };
 };
