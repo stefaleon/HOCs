@@ -5,6 +5,18 @@ import * as actions from "../actions";
 class CommentBox extends React.Component {
   state = { comment: "" };
 
+  componentDidMount() {
+    if (!this.props.auth) {
+      this.props.history.push("/");
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.props.auth) {
+      this.props.history.push("/");
+    }
+  }
+
   handleChange = e => {
     this.setState({ comment: e.target.value });
   };
@@ -32,4 +44,8 @@ class CommentBox extends React.Component {
   }
 }
 
-export default connect(null, actions)(CommentBox);
+const mapStateToProps = state => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps, actions)(CommentBox);
